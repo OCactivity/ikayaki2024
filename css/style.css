@@ -129,7 +129,7 @@ body:not(.home) header {
 #logo {margin: 0;padding: 0;}
 #logo img {
 	display: block;
-	width: 100px;	/*ロゴ画像の幅*/
+	width: 200px;	/*ロゴ画像の幅*/
 }
 
 /*トップページのヘッダー*/
@@ -143,7 +143,7 @@ body:not(.home) header {
 
 /*トップページのロゴ*/
 .home #logo img {
-	width: 30vw;	/*ロゴ画像の幅。画面幅100%=100vwです。*/
+	width: 80vw;	/*ロゴ画像の幅。画面幅100%=100vwです。*/
 	position: absolute;z-index: 1;
 	top: 50%;
 	left: 50%;
