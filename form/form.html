@@ -1,0 +1,154 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<meta http-equiv="Content-Script-Type" content="text/javascript" />
+<title>フォームサンプル</title>
+<meta name="copyright" content="Template Party" />
+<meta name="description" content="ここにサイト説明を入れます" />
+<meta name="keywords" content="キーワード１,キーワード２,キーワード３,キーワード４,キーワード５" />
+<link href="css/style.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+
+<div id="header">
+<h1><a href="index.html">h1テキスト入力場所です。念入りに考えてワードを盛り込みましょう。</a></h1>
+<p id="logo"><a href="index.html"><img src="images/logo.gif" alt="" width="372" height="67" /></a></p>
+<p id="tel"><img src="images/tel.gif" width="300" height="70" alt="" /></p>
+</div>
+<!--/header-->
+
+<div id="container">
+
+<ul id="menu">
+<li><a href="index.html"><img src="images/menu_01.gif" alt="トップページ" width="160" height="80" id="Image1" onmouseover="MM_swapImage('Image1','','images/menu_on_01.gif',0)" onmouseout="MM_swapImgRestore()" /></a></li>
+<li><a href="company.html"><img src="images/menu_02.gif" alt="会社概要" width="160" height="80" id="Image2" onmouseover="MM_swapImage('Image2','','images/menu_on_02.gif',0)" onmouseout="MM_swapImgRestore()" /></a></li>
+<li><a href="service.html"><img src="images/menu_03.gif" alt="業務内容" width="160" height="80" id="Image3" onmouseover="MM_swapImage('Image3','','images/menu_on_03.gif',0)" onmouseout="MM_swapImgRestore()" /></a></li>
+<li><a href="recruit.html"><img src="images/menu_04.gif" alt="採用情報" width="160" height="80" id="Image4" onmouseover="MM_swapImage('Image4','','images/menu_on_04.gif',0)" onmouseout="MM_swapImgRestore()" /></a></li>
+<li><a href="link.html"><img src="images/menu_05.gif" alt="リンク集" width="160" height="80" id="Image5" onmouseover="MM_swapImage('Image5','','images/menu_on_05.gif',0)" onmouseout="MM_swapImgRestore()" /></a></li>
+<li class="last"><a href="contact.html"><img src="images/menu_06.gif" alt="お問い合わせ" width="160" height="80" id="Image6" onmouseover="MM_swapImage('Image6','','images/menu_on_06.gif',0)" onmouseout="MM_swapImgRestore()" /></a></li>
+</ul>
+<!--/menu-->
+
+<div id="contents">
+
+<div id="main">
+
+<h2>お問い合わせ</h2>
+
+<!-- フォームの情報はここからです -->
+<a id="form"></a>
+
+<style>.ta1 {table-layout:auto;}</style>
+
+<form name="form1" enctype="multipart/form-data" method="post" action="<?php echo $_SERVER["REQUEST_URI"];?>#form">
+<input type="hidden" name="mode" value="form" />
+<table class="ta1 mb1em">
+<!-- 入力／確認 -->
+<tr><th class="tamidashi" colspan="2">お問い合わせ</th></tr>
+<tr>
+<th width="150">●氏名<span style="color:red">※</span></th>
+<td>
+<input name="item1" value="<?php echo $form["item1"];?>" type="text" size="40" maxlength="500" class="ws" />
+<?php if ($msg["item1"]) echo '<div style="color:red">' . $msg["item1"] . '</div>'; ?></td>
+</tr>
+<tr>
+<th width="150">●フリガナ<span style="color:red">※</span></th>
+<td>
+<input name="item2" value="<?php echo $form["item2"];?>" type="text" size="40" maxlength="500" class="ws" />
+<?php if ($msg["item2"]) echo '<div style="color:red">' . $msg["item2"] . '</div>'; ?></td>
+</tr>
+<tr>
+<th width="150">●メールアドレス<span style="color:red">※</span></th>
+<td>
+<input name="item3" value="<?php echo $form["item3"];?>" type="text" size="40" maxlength="500" class="ws" />
+<?php if ($msg["item3"]) echo '<div style="color:red">' . $msg["item3"] . '</div>'; ?></td>
+</tr>
+<tr>
+<th width="150">●メールアドレス（確認）<span style="color:red">※</span></th>
+<td>
+<input name="item4" value="<?php echo $form["item4"];?>" type="text" size="40" maxlength="500" class="ws" />
+<?php if ($msg["item4"]) echo '<div style="color:red">' . $msg["item4"] . '</div>'; ?></td>
+</tr>
+<tr>
+<th>●お問い合わせ項目<span style="color:red">※</span></th>
+<td>
+<label><input name="item5" type="radio" value="1" <?php if ($form["item5"]==1) echo 'checked="checked"';?> />本校学祭について</label><br />
+<label><input name="item5" type="radio" value="2" <?php if ($form["item5"]==2) echo 'checked="checked"';?> />OCスタッフについて</label><br />
+<label><input name="item5" type="radio" value="3" <?php if ($form["item5"]==3) echo 'checked="checked"';?> />本店舗について</label><br />
+<label><input name="item5" type="radio" value="4" <?php if ($form["item5"]==4) echo 'checked="checked"';?> />このサイトについて</label><br />
+<label><input name="item5" type="radio" value="5" <?php if ($form["item5"]==5) echo 'checked="checked"';?> />その他のお問い合わせ</label><br />
+
+<?php if ($msg["item5"]) echo '<div style="color:red">' . $msg["item5"] . '</div>'; ?></td>
+</tr>
+<tr>
+<th>●お問い合わせ内容<span style="color:red">※</span></th>
+<td>
+<textarea name="item6" cols="40" rows="10" class="wl"><?php echo $form["item6"]; ?></textarea>
+<?php if ($msg["item6"]) echo '<div style="color:red">' . $msg["item6"] . '</div>'; ?></td>
+</tr>
+<tr>
+<th class="tamidashi" colspan="2">●マクロ等を利用したキャプチャチェック<br /></th>
+</tr>
+
+</table>
+<div class="c">
+<input type="submit" value="内容を確認する" class="btn" />
+&nbsp;&nbsp;
+<input type="reset" value="リセット" class="btn" />
+</div>
+</form>
+<!-- フォームの情報はここまでです -->
+
+</div>
+<!--/main-->
+
+<div id="sub">
+
+<div class="box1 mb1em">
+<h3>SUB MENU</h3>
+<ul class="submenu">
+<li><a href="#">サブメニュー１</a></li>
+<li><a href="#">サブメニュー２</a></li>
+<li><a href="#">サブメニュー３</a></li>
+<li><a href="#">サブメニュー４</a></li>
+<li><a href="#">サブメニュー５</a></li>
+</ul>
+</div>
+
+<div class="box1 mb1em">
+<h3>この見出しは</h3>
+<p>h3タグで囲むと出ます。この下に画像を置く場合幅226pxまで。</p>
+</div>
+
+<h3>box1の外も使えます</h3>
+<p>box1の外ももちろん使えます。ここに画像を置く場合は幅240pxまで。</p>
+
+<h3>SUB MENU</h3>
+<ul class="submenu mb1em">
+<li><a href="#">サブメニュー１</a></li>
+<li><a href="#">サブメニュー２</a></li>
+<li><a href="#">サブメニュー３</a></li>
+<li><a href="#">サブメニュー４</a></li>
+<li><a href="#">サブメニュー５</a></li>
+</ul>
+
+</div>
+<!--/sub-->
+
+</div>
+<!--/contents-->
+
+</div>
+<!--/container-->
+
+<div id="footer">
+Copyright&copy; 2012 <a href="index.html">cool系ビジネスサイト向け 無料ホームページテンプレート tp_cool6</a> All Rights Reserved.<br />
+<span class="pr"><a href="http://template-party.com/" target="_blank">Web Design:Template-Party</a></span>
+</div>
+<!--/footer-->
+
+</body>
+</html>
