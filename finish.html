@@ -1,0 +1,104 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<meta http-equiv="Content-Script-Type" content="text/javascript" />
+<title>フォームサンプル</title>
+<meta name="copyright" content="Template Party" />
+<meta name="description" content="ここにサイト説明を入れます" />
+<meta name="keywords" content="キーワード１,キーワード２,キーワード３,キーワード４,キーワード５" />
+<link href="css/style.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+
+<div id="header">
+<h1><a href="index.html">h1テキスト入力場所です。念入りに考えてワードを盛り込みましょう。</a></h1>
+<p id="logo"><a href="index.html"><img src="images/logo.gif" alt="" width="372" height="67" /></a></p>
+<p id="tel"><img src="images/tel.gif" width="300" height="70" alt="" /></p>
+</div>
+<!--/header-->
+
+<div id="container">
+
+<ul id="menu">
+<li><a href="index.html"><img src="images/menu_01.gif" alt="トップページ" width="160" height="80" id="Image1" onmouseover="MM_swapImage('Image1','','images/menu_on_01.gif',0)" onmouseout="MM_swapImgRestore()" /></a></li>
+<li><a href="company.html"><img src="images/menu_02.gif" alt="会社概要" width="160" height="80" id="Image2" onmouseover="MM_swapImage('Image2','','images/menu_on_02.gif',0)" onmouseout="MM_swapImgRestore()" /></a></li>
+<li><a href="service.html"><img src="images/menu_03.gif" alt="業務内容" width="160" height="80" id="Image3" onmouseover="MM_swapImage('Image3','','images/menu_on_03.gif',0)" onmouseout="MM_swapImgRestore()" /></a></li>
+<li><a href="recruit.html"><img src="images/menu_04.gif" alt="採用情報" width="160" height="80" id="Image4" onmouseover="MM_swapImage('Image4','','images/menu_on_04.gif',0)" onmouseout="MM_swapImgRestore()" /></a></li>
+<li><a href="link.html"><img src="images/menu_05.gif" alt="リンク集" width="160" height="80" id="Image5" onmouseover="MM_swapImage('Image5','','images/menu_on_05.gif',0)" onmouseout="MM_swapImgRestore()" /></a></li>
+<li class="last"><a href="contact.html"><img src="images/menu_06.gif" alt="お問い合わせ" width="160" height="80" id="Image6" onmouseover="MM_swapImage('Image6','','images/menu_on_06.gif',0)" onmouseout="MM_swapImgRestore()" /></a></li>
+</ul>
+<!--/menu-->
+
+<div id="contents">
+
+<div id="main">
+
+<h2>お問い合わせ</h2>
+
+<!-- フォームの情報はここからです -->
+<a id="form"></a>
+
+<style>.ta1 {table-layout:auto;}</style>
+
+<form name="form1" enctype="multipart/form-data" method="post" action="<?php echo $_SERVER["REQUEST_URI"];?>#form">
+<input type="hidden" name="mode" value="finish" />
+<!-- 処理終了 -->
+<p>お問い合わせありがとうございました。
+担当者からの返信に時間がかかる場合があります。
+お手数をおかけしますがしばらくお待ちください。</p>
+</form>
+<!-- フォームの情報はここまでです -->
+
+</div>
+<!--/main-->
+
+<div id="sub">
+
+<div class="box1 mb1em">
+<h3>SUB MENU</h3>
+<ul class="submenu">
+<li><a href="#">サブメニュー１</a></li>
+<li><a href="#">サブメニュー２</a></li>
+<li><a href="#">サブメニュー３</a></li>
+<li><a href="#">サブメニュー４</a></li>
+<li><a href="#">サブメニュー５</a></li>
+</ul>
+</div>
+
+<div class="box1 mb1em">
+<h3>この見出しは</h3>
+<p>h3タグで囲むと出ます。この下に画像を置く場合幅226pxまで。</p>
+</div>
+
+<h3>box1の外も使えます</h3>
+<p>box1の外ももちろん使えます。ここに画像を置く場合は幅240pxまで。</p>
+
+<h3>SUB MENU</h3>
+<ul class="submenu mb1em">
+<li><a href="#">サブメニュー１</a></li>
+<li><a href="#">サブメニュー２</a></li>
+<li><a href="#">サブメニュー３</a></li>
+<li><a href="#">サブメニュー４</a></li>
+<li><a href="#">サブメニュー５</a></li>
+</ul>
+
+</div>
+<!--/sub-->
+
+</div>
+<!--/contents-->
+
+</div>
+<!--/container-->
+
+<div id="footer">
+Copyright&copy; 2012 <a href="index.html">cool系ビジネスサイト向け 無料ホームページテンプレート tp_cool6</a> All Rights Reserved.<br />
+<span class="pr"><a href="http://template-party.com/" target="_blank">Web Design:Template-Party</a></span>
+</div>
+<!--/footer-->
+
+</body>
+</html>
