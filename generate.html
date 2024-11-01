@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>QRコード発行</title>
+    <script src="https://cdn.jsdelivr.net/npm/qrious@4.0.2/dist/qrious.min.js"></script>
+</head>
+<body>
+    <h1>QRコード発行ページ（スタッフ用）</h1>
+    <button id="generate-button">ランダムQRコードを生成</button>
+    <canvas id="qr-code"></canvas>
+    <p id="qr-code-message"></p>
+
+    <script>
+        // ランダムパスコード生成関数
+        function generateRandomCode(length) {
+            const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+            let result = '';
+            for (let i = 0; i < length; i++) {
+                result += characters.charAt(Math.floor(Math.random() * characters.length));
+            }
+            return result;
+        }
+
+        document.getElementById("generate-button").addEventListener("click", function() {
+            // ランダムなパスコードを生成
+            const code = generateRandomCode(10);  // 10文字のランダムコード
+
+            // QRコードを生成
+            const qr = new QRious({
+                element: document.getElementById('qr-code'),
+                value: code,
+                size: 200
+            });
+
+            // ローカルストレージにQRコードデータを保存
+            localStorage.setItem("currentQRCode", code);
+            document.getElementById("qr-code-message").textContent = `QRコードが生成されました。`;
+        });
+    </script>
+</body>
+</html>

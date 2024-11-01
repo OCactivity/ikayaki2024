@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>認証ページ</title>
+</head>
+<body>
+    <h1>認証ページ</h1>
+    <form id="auth-form">
+        <label for="id">スタッフID:</label>
+        <input type="text" id="id" name="id" required>
+        <br>
+        <label for="password">パスコード:</label>
+        <input type="password" id="password" name="password" required>
+        <br>
+        <button type="submit">ログイン</button>
+    </form>
+    <p id="auth-message"></p>
+
+    <script>
+        document.getElementById("auth-form").addEventListener("submit", function(event) {
+            event.preventDefault();
+
+            const userId = document.getElementById("id").value;
+            const userPassword = document.getElementById("password").value;
+
+            // 認証情報
+            const validId = "TAKUMI";
+            const validPassword = "2004";
+
+            // 認証チェック
+            if (userId === validId && userPassword === validPassword) {
+                // 認証成功時にgenerate.htmlへリダイレクト
+                window.location.href = "generate.html";
+            } else {
+                document.getElementById("auth-message").textContent = "IDまたはパスコードが無効です。";
+            }
+        });
+    </script>
+</body>
+</html>

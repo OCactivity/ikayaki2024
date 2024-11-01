@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>QRコード検証</title>
+</head>
+<body>
+    <h1>QRコード検証ページ（お客様用）</h1>
+    <form id="validate-form">
+        <label for="code">QRコードのパスコードを入力してください:</label>
+        <input type="text" id="code" name="code" required>
+        <button type="submit">QRコードを検証</button>
+    </form>
+    <p id="validation-result"></p>
+
+    <script>
+        // 使用済みパスコードを保存する関数
+        function addUsedCode(code) {
+            let usedCodes = JSON.parse(localStorage.getItem("usedCodes")) || [];
+            usedCodes.push(code);
+            localStorage.setItem("usedCodes", JSON.stringify(usedCodes));
+        }
+
+        // パスコードが既に使用済みか確認する関数
+        function isCodeUsed(code) {
+            let usedCodes = JSON.parse(localStorage.getItem("usedCodes")) || [];
+            return usedCodes.includes(code);
+        }
+
+        document.getElementById("validate-form").addEventListener("submit", function(event) {
+            event.preventDefault();
+            const code = document.getElementById("code").value;
+
+            // ローカルストレージから現在のQRコードを取得
+            const currentQRCode = localStorage.getItem("currentQRCode");
+
+            // チケットの有効性を確認
+            if (currentQRCode && currentQRCode === code && !isCodeUsed(code)) {
+                document.getElementById("validation-result").textContent = "チケットが有効です";
+                addUsedCode(code);  // 使用済みに記録
+            } else {
+                document.getElementById("validation-result").textContent = "無効なチケットです";
+            }
+        });
+    </script>
+</body>
+</html>
