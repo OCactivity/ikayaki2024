@@ -12,6 +12,9 @@
             display: none;
         }
     </style>
+    <!-- Firebaseのライブラリを読み込み -->
+    <script src="https://www.gstatic.com/firebasejs/9.1.2/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.1.2/firebase-database.js"></script>
 </head>
 <body>
     <h1>店舗スタッフ認証</h1>
@@ -36,6 +39,25 @@
     </div>
 
     <script>
+        // Firebaseの設定
+        const firebaseConfig = {
+            apiKey: "AIzaSyCdiTGt2i-GTHgRopkIyLulnYjxUohGd4g",
+            authDomain: "oic-ikayaki.firebaseapp.com",
+            databaseURL: "https://oic-ikayaki-default-rtdb.firebaseio.com",
+            projectId: "oic-ikayaki",
+            storageBucket: "oic-ikayaki.firebasestorage.app",
+            messagingSenderId: "244993702958",
+            appId: "1:244993702958:web:d8bf9a3abe891ef184b3bf",
+            measurementId: "G-CCTMTKSPD9"
+        };
+
+        // Firebaseを初期化
+        const app = firebase.initializeApp(firebaseConfig);
+        const database = firebase.database();
+
+        let generatedPasscode = null;
+        let validatedCodes = new Set();
+
         function login() {
             const id = document.getElementById("staffId").value;
             const password = document.getElementById("staffPassword").value;
@@ -49,24 +71,15 @@
         }
 
         function generateCode() {
-            const passcode = Math.floor(100000 + Math.random() * 900000).toString();
+            do {
+                generatedPasscode = Math.floor(100000 + Math.random() * 900000).toString();
+            } while (validatedCodes.has(generatedPasscode));
 
-            // JSONファイルにパスコードを保存（この部分はサーバーサイド処理が必要）
-            fetch('passcodes.json')
-                .then(response => response.json())
-                .then(data => {
-                    data.passcodes.push({ code: passcode, used: false });
-                    return fetch('passcodes.json', {
-                        method: 'PUT', // 注意: GitHub PagesではPUTはサポートされていません
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify(data)
-                    });
-                })
-                .then(() => {
-                    document.getElementById("passcode").textContent = passcode;
-                    document.getElementById("codeDisplay").classList.remove("hidden");
-                })
-                .catch(error => console.error('Error:', error));
+            validatedCodes.add(generatedPasscode);
+            document.getElementById("passcode").textContent = generatedPasscode;
+            document.getElementById("codeDisplay").classList.remove("hidden");
+            // Firebaseにパスコードを保存
+            database.ref('passcodes/').push({ passcode: generatedPasscode, used: false });
         }
     </script>
 </body>
