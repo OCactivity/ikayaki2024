@@ -35,22 +35,17 @@
     <p id="qr-code-message"></p>
 
     <script>
-        // ランダムパスコード生成関数
-        function generateRandomCode(length) {
-            const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-            let result = '';
-            for (let i = 0; i < length; i++) {
-                result += characters.charAt(Math.floor(Math.random() * characters.length));
-            }
-            return result;
+        // ランダム8桁数字生成関数
+        function generateRandomNumber() {
+            return Math.floor(10000000 + Math.random() * 90000000).toString(); // 8桁のランダム数字を生成
         }
 
         document.getElementById("generate-button").addEventListener("click", function() {
-            // ランダムなパスコードを生成
-            const code = generateRandomCode(10);  // 10文字のランダムコード
+            // ランダムな8桁数字を生成
+            const code = generateRandomNumber();
             const timestamp = new Date().getTime();  // 現在のタイムスタンプ
 
-            // QRコードの値を「パスコード:タイムスタンプ」とする
+            // QRコードの値を「数字:タイムスタンプ」とする
             const qrValue = `${code}:${timestamp}`;
 
             // QRコードを生成
