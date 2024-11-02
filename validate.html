@@ -58,6 +58,8 @@
                 } else {
                     alert("認証失敗です。");
                 }
+            }).catch((error) => {
+                console.error("パスコードの取得中にエラーが発生しました:", error);
             });
         }
     </script>
