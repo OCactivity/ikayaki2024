@@ -13,6 +13,18 @@
         .hidden {
             display: none;
         }
+        .input-container {
+            margin-bottom: 10px; /* 入力ボックス間のマージン */
+        }
+        .input-container label {
+            display: inline-block;
+            margin-right: 10px; /* ラベルと入力ボックス間のマージン */
+            width: 50px; /* ラベルの幅 */
+        }
+        .input-container input {
+            display: inline-block; /* 入力ボックスを横並びに */
+            width: 150px; /* 入力ボックスの幅 */
+        }
     </style>
     <!-- Firebaseのライブラリを読み込み -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/8.10.0/firebase-app.js"></script>
@@ -23,12 +35,14 @@
 
     <div id="staffLogin">
         <h2>スタッフログイン</h2>
-        <label for="staffId">ID:</label>
-        <input type="text" id="staffId" value="takumi" required>
-        <br>
-        <label for="staffPassword">PW:</label>
-        <input type="password" id="staffPassword" value="2004" required>
-        <br>
+        <div class="input-container">
+            <label for="staffId">ID:</label>
+            <input type="text" id="staffId" value="takumi" required>
+        </div>
+        <div class="input-container">
+            <label for="staffPassword">PW:</label>
+            <input type="password" id="staffPassword" value="2004" required>
+        </div>
         <button onclick="login()">ログイン</button>
     </div>
 
