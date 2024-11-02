@@ -3,12 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>パスコード生成</title>
+    <title>店舗スタッフ認証</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: black; /* 背景色を黒に設定 */
-            color: white; /* 文字色を白に設定 */
         }
         .hidden {
             display: none;
@@ -16,7 +14,7 @@
     </style>
 </head>
 <body>
-    <h1>パスコード生成</h1>
+    <h1>店舗スタッフ認証</h1>
 
     <div id="staffLogin">
         <h2>スタッフログイン</h2>
@@ -38,9 +36,6 @@
     </div>
 
     <script>
-        let generatedPasscode = null;
-        let validatedCodes = new Set();
-
         function login() {
             const id = document.getElementById("staffId").value;
             const password = document.getElementById("staffPassword").value;
@@ -54,15 +49,24 @@
         }
 
         function generateCode() {
-            do {
-                generatedPasscode = Math.floor(100000 + Math.random() * 900000).toString();
-            } while (validatedCodes.has(generatedPasscode));
+            const passcode = Math.floor(100000 + Math.random() * 900000).toString();
 
-            validatedCodes.add(generatedPasscode);
-            document.getElementById("passcode").textContent = generatedPasscode;
-            document.getElementById("codeDisplay").classList.remove("hidden");
-            // Local Storageにパスコードを保存
-            localStorage.setItem('generatedPasscode', generatedPasscode);
+            // JSONファイルにパスコードを保存
+            fetch('passcodes.json')
+                .then(response => response.json())
+                .then(data => {
+                    data.passcodes.push({ code: passcode, used: false });
+                    return fetch('passcodes.json', {
+                        method: 'PUT',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(data)
+                    });
+                })
+                .then(() => {
+                    document.getElementById("passcode").textContent = passcode;
+                    document.getElementById("codeDisplay").classList.remove("hidden");
+                })
+                .catch(error => console.error('Error:', error));
         }
     </script>
 </body>
