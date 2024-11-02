@@ -90,7 +90,7 @@
             document.getElementById("codeDisplay").classList.remove("hidden");
 
             // パスコードをポップアップで表示
-            alert("生成されたパスコード: " + generatedPasscode);
+            alert("クーポンコード：" + generatedPasscode);
 
             // Firebaseにパスコードを保存
             database.ref('passcodes/').push({ passcode: generatedPasscode, used: false })
