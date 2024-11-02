@@ -27,9 +27,11 @@
         }
         .valid {
             color: green; /* 有効なチケットの色を緑に設定 */
+            font-weight: bold; /* 太字にする */
         }
         .invalid {
             color: red; /* 無効なチケットの色を赤に設定 */
+            font-weight: bold; /* 太字にする */
         }
     </style>
 </head>
@@ -46,25 +48,30 @@
         // 使用済みのQRコードを保存する関数
         function addUsedCode(code) {
             let usedCodes = JSON.parse(localStorage.getItem("usedCodes")) || [];
-            usedCodes.push(code);
-            localStorage.setItem("usedCodes", JSON.stringify(usedCodes));
+            usedCodes.push(code); // 新しいコードを追加
+            localStorage.setItem("usedCodes", JSON.stringify(usedCodes)); // ローカルストレージに保存
         }
 
         // QRコードが既に使用済みか確認する関数
         function isCodeUsed(code) {
             let usedCodes = JSON.parse(localStorage.getItem("usedCodes")) || [];
-            return usedCodes.includes(code);
+            return usedCodes.includes(code); // 使用済みかどうかを確認
         }
 
         document.getElementById("validate-form").addEventListener("submit", function(event) {
-            event.preventDefault();
-            const inputValue = document.getElementById("code").value;
+            event.preventDefault(); // フォームのデフォルト動作を防ぐ
+            const inputValue = document.getElementById("code").value.trim(); // 入力値を取得
 
             // QRコードの値を「パスコード:タイムスタンプ」に分割
             const [inputCode, timestamp] = inputValue.split(':');
 
             // ローカルストレージから現在のQRコードを取得
             const currentQRCode = localStorage.getItem("currentQRCode");
+            if (!currentQRCode) {
+                document.getElementById("validation-result").textContent = "QRコードが生成されていません。";
+                document.getElementById("validation-result").className = "invalid"; // エラースタイル
+                return;
+            }
             const [storedCode] = currentQRCode.split(':');
 
             // チケットの有効性を確認
