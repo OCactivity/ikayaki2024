@@ -66,9 +66,11 @@
                 if (isValid) {
                     resultText.textContent = "認証成功";
                     resultText.style.color = "green";
+                    alert("認証成功");
                 } else {
                     resultText.textContent = "無効なパスコード";
                     resultText.style.color = "red";
+                    alert("無効なパスコード");
                 }
                 resultText.classList.remove("hidden");
             }).catch((error) => {
