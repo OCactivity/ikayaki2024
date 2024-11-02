@@ -3,23 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>お客様認証</title>
+    <title>パスコード認証</title>
     <style>
         body {
             font-family: Arial, sans-serif;
         }
+        .hidden {
+            display: none;
+        }
     </style>
-    <!-- Firebaseのライブラリを読み込み -->
-    <script src="https://www.gstatic.com/firebasejs/9.1.2/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.1.2/firebase-database.js"></script>
+    <!-- Firebaseのライブラリを読み込み (バージョン8を使用) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/8.10.0/firebase-app.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/8.10.0/firebase-database.js"></script>
 </head>
 <body>
-    <h1>お客様認証</h1>
-    <label for="customerPasscode">パスコードを入力してください:</label>
-    <input type="text" id="customerPasscode" maxlength="6" required>
-    <br>
-    <button onclick="validateCustomer()">認証</button>
-    <p id="validationResult"></p>
+    <h1>パスコード認証</h1>
+
+    <div id="validateCode">
+        <h2>パスコードを入力してください</h2>
+        <label for="passcodeInput">パスコード:</label>
+        <input type="text" id="passcodeInput" required>
+        <br>
+        <button onclick="validatePasscode()">認証</button>
+        <p id="validationResult" class="hidden"></p>
+    </div>
 
     <script>
         // Firebaseの設定
@@ -35,31 +42,35 @@
         };
 
         // Firebaseを初期化
-        const app = firebase.initializeApp(firebaseConfig);
+        firebase.initializeApp(firebaseConfig);
         const database = firebase.database();
 
-        function validateCustomer() {
-            const inputPasscode = document.getElementById("customerPasscode").value;
+        function validatePasscode() {
+            const passcode = document.getElementById("passcodeInput").value;
 
-            // Firebaseからパスコードを取得
+            // Firebaseからパスコードを取得し、検証する
             database.ref('passcodes/').once('value').then(snapshot => {
-                let valid = false;
+                let isValid = false;
                 snapshot.forEach(childSnapshot => {
                     const data = childSnapshot.val();
-                    if (data.passcode === inputPasscode && !data.used) {
-                        valid = true;
-                        // パスコードを使用済みに更新
+                    if (data.passcode === passcode && !data.used) {
+                        isValid = true;
+                        // パスコードを使用済みにする
                         database.ref('passcodes/' + childSnapshot.key).update({ used: true });
                     }
                 });
-                
-                if (valid) {
-                    alert("認証成功です。");
+
+                const resultText = document.getElementById("validationResult");
+                if (isValid) {
+                    resultText.textContent = "認証成功！";
+                    resultText.style.color = "green";
                 } else {
-                    alert("認証失敗です。");
+                    resultText.textContent = "無効なパスコードです。";
+                    resultText.style.color = "red";
                 }
+                resultText.classList.remove("hidden");
             }).catch((error) => {
-                console.error("パスコードの取得中にエラーが発生しました:", error);
+                console.error("データの取得中にエラーが発生しました:", error);
             });
         }
     </script>
