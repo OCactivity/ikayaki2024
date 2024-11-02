@@ -29,7 +29,7 @@
     </style>
 </head>
 <body>
-    <h1>QRコード発行（店舗用）</h1>
+    <h1>QRコード発行ページ（スタッフ用）</h1>
     <button id="generate-button">ランダムQRコードを生成</button>
     <canvas id="qr-code"></canvas>
     <p id="qr-code-message"></p>
@@ -62,7 +62,7 @@
 
             // ローカルストレージにQRコードデータを保存
             localStorage.setItem("currentQRCode", qrValue);
-            document.getElementById("qr-code-message").textContent = `QRコードが生成されました。`;
+            document.getElementById("qr-code-message").textContent = `QRコードが生成されました。パスコード: ${code}`; // 生成したパスコードを表示
         });
     </script>
 </body>
