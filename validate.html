@@ -2,81 +2,40 @@
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
-    <title>QRコード検証</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>お客様認証</title>
     <style>
         body {
-            color: white; /* 文字の色を白に設定 */
-            background-color: #333; /* 背景色をダークグレーに設定 */
-            font-family: Arial, sans-serif; /* フォントを設定 */
-            margin: 20px; /* マージンを設定 */
-        }
-        button {
-            background-color: #007BFF; /* ボタンの背景色を青に設定 */
-            color: white; /* ボタンの文字色を白に設定 */
-            border: none; /* ボーダーを無しに設定 */
-            padding: 10px 15px; /* パディングを設定 */
-            cursor: pointer; /* カーソルをポインターに変更 */
-            border-radius: 5px; /* ボタンの角を丸くする */
-            transition: background-color 0.3s; /* 背景色の遷移を設定 */
-        }
-        button:hover {
-            background-color: #0056b3; /* ホバー時の背景色 */
-        }
-        #validation-result {
-            margin-top: 20px; /* 結果のマージンを設定 */
-        }
-        .valid {
-            color: green; /* 有効なチケットの色を緑に設定 */
-        }
-        .invalid {
-            color: red; /* 無効なチケットの色を赤に設定 */
+            font-family: Arial, sans-serif;
         }
     </style>
 </head>
 <body>
-    <h1>QRコード検証（お客様用）</h1>
-    <form id="validate-form">
-        <label for="code">QRコードのパスコードを入力してください:</label>
-        <input type="text" id="code" name="code" required>
-        <button type="submit">QRコードを検証</button>
-    </form>
-    <p id="validation-result"></p>
+    <h1>お客様認証</h1>
+    <label for="customerPasscode">パスコードを入力してください:</label>
+    <input type="text" id="customerPasscode" maxlength="6" required>
+    <br>
+    <button onclick="validateCustomer()">認証</button>
+    <p id="validationResult"></p>
 
     <script>
-        // 使用済みのQRコードを保存する関数
-        function addUsedCode(code) {
-            let usedCodes = JSON.parse(localStorage.getItem("usedCodes")) || [];
-            usedCodes.push(code);
-            localStorage.setItem("usedCodes", JSON.stringify(usedCodes));
-        }
+        let validatedCodes = new Set();
 
-        // QRコードが既に使用済みか確認する関数
-        function isCodeUsed(code) {
-            let usedCodes = JSON.parse(localStorage.getItem("usedCodes")) || [];
-            return usedCodes.includes(code);
-        }
+        function validateCustomer() {
+            const inputPasscode = document.getElementById("customerPasscode").value;
+            const generatedPasscode = localStorage.getItem('generatedPasscode');
 
-        document.getElementById("validate-form").addEventListener("submit", function(event) {
-            event.preventDefault();
-            const inputValue = document.getElementById("code").value;
-
-            // QRコードの値を「数字:タイムスタンプ」に分割
-            const [inputCode] = inputValue.split(':');
-
-            // ローカルストレージから現在のQRコードを取得
-            const currentQRCode = localStorage.getItem("currentQRCode");
-            const [storedCode] = currentQRCode.split(':');
-
-            // チケットの有効性を確認
-            if (storedCode === inputCode && !isCodeUsed(inputValue)) {
-                document.getElementById("validation-result").textContent = "チケットが有効です";
-                document.getElementById("validation-result").className = "valid"; // 有効なチケットのスタイル
-                addUsedCode(inputValue);  // 使用済みに記録
+            if (validatedCodes.has(inputPasscode)) {
+                alert("このパスコードは既に使用されています。");
+            } else if (inputPasscode === generatedPasscode) {
+                alert("認証成功です。");
+                validatedCodes.add(inputPasscode);
+                // Local Storageからパスコードを削除
+                localStorage.removeItem('generatedPasscode');
             } else {
-                document.getElementById("validation-result").textContent = "無効なチケットです";
-                document.getElementById("validation-result").className = "invalid"; // 無効なチケットのスタイル
+                alert("認証失敗です。");
             }
-        });
+        }
     </script>
 </body>
 </html>
