@@ -2,60 +2,66 @@
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
-    <title>QRコード発行</title>
-    <script src="https://cdn.jsdelivr.net/npm/qrious@4.0.2/dist/qrious.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>店舗スタッフ認証</title>
     <style>
         body {
-            color: white; /* 文字の色を白に設定 */
-            background-color: #333; /* 背景色をダークグレーに設定 */
-            font-family: Arial, sans-serif; /* フォントを設定 */
-            margin: 20px; /* マージンを設定 */
+            font-family: Arial, sans-serif;
         }
-        button {
-            background-color: #007BFF; /* ボタンの背景色を青に設定 */
-            color: white; /* ボタンの文字色を白に設定 */
-            border: none; /* ボーダーを無しに設定 */
-            padding: 10px 15px; /* パディングを設定 */
-            cursor: pointer; /* カーソルをポインターに変更 */
-            border-radius: 5px; /* ボタンの角を丸くする */
-            transition: background-color 0.3s; /* 背景色の遷移を設定 */
-        }
-        button:hover {
-            background-color: #0056b3; /* ホバー時の背景色 */
+        .hidden {
+            display: none;
         }
     </style>
 </head>
 <body>
-    <h1>QRコード発行（店舗用）</h1>
-    <button id="generate-button">ランダムQRコードを生成</button>
-    <canvas id="qr-code"></canvas>
-    <p id="qr-code-message"></p>
+    <h1>店舗スタッフ認証</h1>
+
+    <div id="staffLogin">
+        <h2>スタッフログイン</h2>
+        <label for="staffId">ID:</label>
+        <input type="text" id="staffId" value="takumi" required>
+        <br>
+        <label for="staffPassword">パスワード:</label>
+        <input type="password" id="staffPassword" value="2004" required>
+        <br>
+        <button onclick="login()">ログイン</button>
+    </div>
+
+    <div id="generateCode" class="hidden">
+        <h2>パスコード生成</h2>
+        <button onclick="generateCode()">パスコード生成</button>
+        <p id="codeDisplay" class="hidden">生成されたパスコード: <span id="passcode"></span></p>
+        <p>このパスコードをお客様に伝えてください。</p>
+        <p>お客様の認証画面: <a id="customerLink" href="validate.html" target="_blank">ここをクリック</a></p>
+    </div>
 
     <script>
-        // ランダム8桁数字生成関数
-        function generateRandomNumber() {
-            return Math.floor(10000000 + Math.random() * 90000000).toString(); // 8桁のランダム数字を生成
+        let generatedPasscode = null;
+        let validatedCodes = new Set();
+
+        function login() {
+            const id = document.getElementById("staffId").value;
+            const password = document.getElementById("staffPassword").value;
+
+            if (id === "takumi" && password === "2004") {
+                document.getElementById("staffLogin").classList.add("hidden");
+                document.getElementById("generateCode").classList.remove("hidden");
+            } else {
+                alert("IDまたはパスワードが間違っています。");
+            }
         }
 
-        document.getElementById("generate-button").addEventListener("click", function() {
-            // ランダムな8桁数字を生成
-            const code = generateRandomNumber();
-            const timestamp = new Date().getTime();  // 現在のタイムスタンプ
+        function generateCode() {
+            do {
+                generatedPasscode = Math.floor(100000 + Math.random() * 900000).toString();
+            } while (validatedCodes.has(generatedPasscode));
 
-            // QRコードの値を「数字:タイムスタンプ」とする
-            const qrValue = `${code}:${timestamp}`;
-
-            // QRコードを生成
-            const qr = new QRious({
-                element: document.getElementById('qr-code'),
-                value: qrValue,
-                size: 200 // QRコードのサイズ
-            });
-
-            // ローカルストレージにQRコードデータを保存
-            localStorage.setItem("currentQRCode", qrValue);
-            document.getElementById("qr-code-message").textContent = `QRコードが生成されました。パスコード: ${code}`; // 生成したパスコードを表示
-        });
+            validatedCodes.add(generatedPasscode);
+            document.getElementById("passcode").textContent = generatedPasscode;
+            document.getElementById("codeDisplay").classList.remove("hidden");
+            // Local Storageにパスコードを保存
+            localStorage.setItem('generatedPasscode', generatedPasscode);
+        }
     </script>
 </body>
 </html>
