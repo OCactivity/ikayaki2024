@@ -86,8 +86,13 @@
         function generateCode() {
             const generatedPasscode = Math.floor(100000 + Math.random() * 900000).toString();
 
+            // パスコードを画面に表示
             document.getElementById("passcode").textContent = generatedPasscode;
             document.getElementById("codeDisplay").classList.remove("hidden");
+
+            // パスコードをポップアップで表示
+            alert("生成されたパスコード: " + generatedPasscode);
+
             // Firebaseにパスコードを保存
             database.ref('passcodes/').push({ passcode: generatedPasscode, used: false })
             .then(() => {
@@ -100,3 +105,4 @@
     </script>
 </body>
 </html>
+
