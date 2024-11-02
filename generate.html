@@ -51,13 +51,13 @@
         function generateCode() {
             const passcode = Math.floor(100000 + Math.random() * 900000).toString();
 
-            // JSONファイルにパスコードを保存
+            // JSONファイルにパスコードを保存（この部分はサーバーサイド処理が必要）
             fetch('passcodes.json')
                 .then(response => response.json())
                 .then(data => {
                     data.passcodes.push({ code: passcode, used: false });
                     return fetch('passcodes.json', {
-                        method: 'PUT',
+                        method: 'PUT', // 注意: GitHub PagesではPUTはサポートされていません
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify(data)
                     });
