@@ -4,9 +4,32 @@
     <meta charset="UTF-8">
     <title>QRコード発行</title>
     <script src="https://cdn.jsdelivr.net/npm/qrious@4.0.2/dist/qrious.min.js"></script>
+    <style>
+        body {
+            color: white; /* 文字の色を白に設定 */
+            background-color: #333; /* 背景色をダークグレーに設定（見やすくするため） */
+            font-family: Arial, sans-serif; /* フォントを設定 */
+            margin: 20px; /* マージンを設定 */
+        }
+        button {
+            background-color: #007BFF; /* ボタンの背景色を青に設定 */
+            color: white; /* ボタンの文字色を白に設定 */
+            border: none; /* ボーダーを無しに設定 */
+            padding: 10px 15px; /* パディングを設定 */
+            cursor: pointer; /* カーソルをポインターに変更 */
+            border-radius: 5px; /* ボタンの角を丸くする */
+            transition: background-color 0.3s; /* 背景色の遷移を設定 */
+        }
+        button:hover {
+            background-color: #0056b3; /* ホバー時の背景色 */
+        }
+        #validation-result {
+            margin-top: 20px; /* 結果のマージンを設定 */
+        }
+    </style>
 </head>
 <body>
-    <h1>QRコード発行ページ（スタッフ用）</h1>
+    <h1>QRコード発行(店舗スタッフ)</h1>
     <button id="generate-button">ランダムQRコードを生成</button>
     <canvas id="qr-code"></canvas>
     <p id="qr-code-message"></p>
@@ -25,16 +48,20 @@
         document.getElementById("generate-button").addEventListener("click", function() {
             // ランダムなパスコードを生成
             const code = generateRandomCode(10);  // 10文字のランダムコード
+            const timestamp = new Date().getTime();  // 現在のタイムスタンプ
+
+            // QRコードの値を「パスコード:タイムスタンプ」とする
+            const qrValue = `${code}:${timestamp}`;
 
             // QRコードを生成
             const qr = new QRious({
                 element: document.getElementById('qr-code'),
-                value: code,
+                value: qrValue,
                 size: 200
             });
 
             // ローカルストレージにQRコードデータを保存
-            localStorage.setItem("currentQRCode", code);
+            localStorage.setItem("currentQRCode", qrValue);
             document.getElementById("qr-code-message").textContent = `QRコードが生成されました。`;
         });
     </script>
