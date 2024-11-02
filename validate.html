@@ -7,6 +7,29 @@
         body {
             color: white; /* 文字の色を白に設定 */
             background-color: #333; /* 背景色をダークグレーに設定（見やすくするため） */
+            font-family: Arial, sans-serif; /* フォントを設定 */
+            margin: 20px; /* マージンを設定 */
+        }
+        button {
+            background-color: #007BFF; /* ボタンの背景色を青に設定 */
+            color: white; /* ボタンの文字色を白に設定 */
+            border: none; /* ボーダーを無しに設定 */
+            padding: 10px 15px; /* パディングを設定 */
+            cursor: pointer; /* カーソルをポインターに変更 */
+            border-radius: 5px; /* ボタンの角を丸くする */
+            transition: background-color 0.3s; /* 背景色の遷移を設定 */
+        }
+        button:hover {
+            background-color: #0056b3; /* ホバー時の背景色 */
+        }
+        #validation-result {
+            margin-top: 20px; /* 結果のマージンを設定 */
+        }
+        .valid {
+            color: green; /* 有効なチケットの色を緑に設定 */
+        }
+        .invalid {
+            color: red; /* 無効なチケットの色を赤に設定 */
         }
     </style>
 </head>
@@ -41,11 +64,14 @@
             const currentQRCode = localStorage.getItem("currentQRCode");
 
             // チケットの有効性を確認
+            const validationResult = document.getElementById("validation-result");
             if (currentQRCode && currentQRCode === code && !isCodeUsed(code)) {
-                document.getElementById("validation-result").textContent = "チケットが有効です";
+                validationResult.textContent = "チケットが有効です";
+                validationResult.className = "valid"; // 有効なメッセージにクラスを追加
                 addUsedCode(code);  // 使用済みに記録
             } else {
-                document.getElementById("validation-result").textContent = "無効なチケットです";
+                validationResult.textContent = "無効なチケットです";
+                validationResult.className = "invalid"; // 無効なメッセージにクラスを追加
             }
         });
     </script>
