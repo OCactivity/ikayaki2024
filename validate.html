@@ -6,7 +6,7 @@
     <style>
         body {
             color: white; /* 文字の色を白に設定 */
-            background-color: #333; /* 背景色をダークグレーに設定（見やすくするため） */
+            background-color: #333; /* 背景色をダークグレーに設定 */
             font-family: Arial, sans-serif; /* フォントを設定 */
             margin: 20px; /* マージンを設定 */
         }
@@ -60,12 +60,15 @@
             event.preventDefault();
             const inputValue = document.getElementById("code").value;
 
+            // QRコードの値を「数字:タイムスタンプ」に分割
+            const [inputCode] = inputValue.split(':');
+
             // ローカルストレージから現在のQRコードを取得
             const currentQRCode = localStorage.getItem("currentQRCode");
-            const [storedCode] = currentQRCode.split(':'); // 現在のQRコードからパスコードを取得
+            const [storedCode] = currentQRCode.split(':');
 
             // チケットの有効性を確認
-            if (storedCode === inputValue && !isCodeUsed(inputValue)) {
+            if (storedCode === inputCode && !isCodeUsed(inputValue)) {
                 document.getElementById("validation-result").textContent = "チケットが有効です";
                 document.getElementById("validation-result").className = "valid"; // 有効なチケットのスタイル
                 addUsedCode(inputValue);  // 使用済みに記録
