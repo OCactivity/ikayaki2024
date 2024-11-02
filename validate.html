@@ -7,29 +7,44 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: black; /* 背景色を黒に設定 */
-            color: white; /* 文字色を白に設定 */
         }
     </style>
 </head>
 <body>
     <h1>お客様認証</h1>
-
-    <label for="passcodeInput">パスコードを入力してください:</label>
-    <input type="text" id="passcodeInput" required>
-    <button onclick="validate()">認証</button>
+    <label for="customerPasscode">パスコードを入力してください:</label>
+    <input type="text" id="customerPasscode" maxlength="6" required>
+    <br>
+    <button onclick="validateCustomer()">認証</button>
+    <p id="validationResult"></p>
 
     <script>
-        function validate() {
-            const inputCode = document.getElementById("passcodeInput").value;
-            const storedCode = localStorage.getItem('generatedPasscode');
+        function validateCustomer() {
+            const inputPasscode = document.getElementById("customerPasscode").value;
 
-            if (inputCode === storedCode) {
-                alert("認証成功");
-                // 認証成功の処理をここに追加
-            } else {
-                alert("無効なパスコードです。");
-            }
+            // JSONファイルからパスコードを取得
+            fetch('passcodes.json')
+                .then(response => response.json())
+                .then(data => {
+                    const passcodeEntry = data.passcodes.find(entry => entry.code === inputPasscode);
+
+                    if (!passcodeEntry) {
+                        alert("認証失敗です。");
+                    } else if (passcodeEntry.used) {
+                        alert("このパスコードは既に使用されています。");
+                    } else {
+                        alert("認証成功です。");
+                        passcodeEntry.used = true;
+
+                        // 更新されたデータをJSONファイルに保存
+                        return fetch('passcodes.json', {
+                            method: 'PUT',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify(data)
+                        });
+                    }
+                })
+                .catch(error => console.error('Error:', error));
         }
     </script>
 </body>
