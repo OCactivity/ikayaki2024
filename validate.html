@@ -22,7 +22,7 @@
         function validateCustomer() {
             const inputPasscode = document.getElementById("customerPasscode").value;
 
-            // JSONファイルからパスコードを取得
+            // JSONファイルからパスコードを取得（サーバーサイドが必要）
             fetch('passcodes.json')
                 .then(response => response.json())
                 .then(data => {
@@ -36,7 +36,7 @@
                         alert("認証成功です。");
                         passcodeEntry.used = true;
 
-                        // 更新されたデータをJSONファイルに保存
+                        // 更新されたデータをJSONファイルに保存（サーバーサイドが必要）
                         return fetch('passcodes.json', {
                             method: 'PUT',
                             headers: { 'Content-Type': 'application/json' },
