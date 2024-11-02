@@ -7,35 +7,28 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: white; /* 背景色を白に設定 */
-            color: black; /* 文字色を黒に設定（必要に応じて変更可能） */
+            background-color: black; /* 背景色を黒に設定 */
+            color: white; /* 文字色を白に設定 */
         }
     </style>
 </head>
 <body>
     <h1>お客様認証</h1>
-    <label for="customerPasscode">パスコードを入力してください:</label>
-    <input type="text" id="customerPasscode" maxlength="6" required>
-    <br>
-    <button onclick="validateCustomer()">認証</button>
-    <p id="validationResult"></p>
+
+    <label for="passcodeInput">パスコードを入力してください:</label>
+    <input type="text" id="passcodeInput" required>
+    <button onclick="validate()">認証</button>
 
     <script>
-        let validatedCodes = new Set();
+        function validate() {
+            const inputCode = document.getElementById("passcodeInput").value;
+            const storedCode = localStorage.getItem('generatedPasscode');
 
-        function validateCustomer() {
-            const inputPasscode = document.getElementById("customerPasscode").value;
-            const generatedPasscode = localStorage.getItem('generatedPasscode');
-
-            if (validatedCodes.has(inputPasscode)) {
-                alert("このパスコードは既に使用されています。");
-            } else if (inputPasscode === generatedPasscode) {
-                alert("認証成功です。");
-                validatedCodes.add(inputPasscode);
-                // Local Storageからパスコードを削除
-                localStorage.removeItem('generatedPasscode');
+            if (inputCode === storedCode) {
+                alert("認証成功");
+                // 認証成功の処理をここに追加
             } else {
-                alert("認証失敗です。");
+                alert("無効なパスコードです。");
             }
         }
     </script>
