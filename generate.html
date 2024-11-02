@@ -37,11 +37,11 @@
         <h2>スタッフログイン</h2>
         <div class="input-container">
             <label for="staffId">ID:</label>
-            <input type="text" id="staffId" value="takumi" required>
+            <input type="text" id="staffId" required>
         </div>
         <div class="input-container">
             <label for="staffPassword">PW:</label>
-            <input type="password" id="staffPassword" value="2004" required>
+            <input type="password" id="staffPassword" required>
         </div>
         <button onclick="login()">ログイン</button>
     </div>
@@ -75,6 +75,7 @@
             const id = document.getElementById("staffId").value;
             const password = document.getElementById("staffPassword").value;
 
+            // 簡易的な認証処理（実際にはサーバーサイドで処理すべき）
             if (id === "takumi" && password === "2004") {
                 document.getElementById("staffLogin").classList.add("hidden");
                 document.getElementById("generateCode").classList.remove("hidden");
