@@ -34,7 +34,7 @@
     </style>
 </head>
 <body>
-    <h1>QRコード検証</h1>
+    <h1>QRコード検証ページ（お客様用）</h1>
     <form id="validate-form">
         <label for="code">QRコードのパスコードを入力してください:</label>
         <input type="text" id="code" name="code" required>
@@ -43,14 +43,14 @@
     <p id="validation-result"></p>
 
     <script>
-        // 使用済みパスコードを保存する関数
+        // 使用済みのQRコードを保存する関数
         function addUsedCode(code) {
             let usedCodes = JSON.parse(localStorage.getItem("usedCodes")) || [];
             usedCodes.push(code);
             localStorage.setItem("usedCodes", JSON.stringify(usedCodes));
         }
 
-        // パスコードが既に使用済みか確認する関数
+        // QRコードが既に使用済みか確認する関数
         function isCodeUsed(code) {
             let usedCodes = JSON.parse(localStorage.getItem("usedCodes")) || [];
             return usedCodes.includes(code);
@@ -58,20 +58,23 @@
 
         document.getElementById("validate-form").addEventListener("submit", function(event) {
             event.preventDefault();
-            const code = document.getElementById("code").value;
+            const inputValue = document.getElementById("code").value;
+
+            // QRコードの値を「パスコード:タイムスタンプ」に分割
+            const [inputCode, timestamp] = inputValue.split(':');
 
             // ローカルストレージから現在のQRコードを取得
             const currentQRCode = localStorage.getItem("currentQRCode");
+            const [storedCode] = currentQRCode.split(':');
 
             // チケットの有効性を確認
-            const validationResult = document.getElementById("validation-result");
-            if (currentQRCode && currentQRCode === code && !isCodeUsed(code)) {
-                validationResult.textContent = "チケットが有効です";
-                validationResult.className = "valid"; // 有効なメッセージにクラスを追加
-                addUsedCode(code);  // 使用済みに記録
+            if (storedCode === inputCode && !isCodeUsed(inputValue)) {
+                document.getElementById("validation-result").textContent = "チケットが有効です";
+                document.getElementById("validation-result").className = "valid"; // 有効なチケットのスタイル
+                addUsedCode(inputValue);  // 使用済みに記録
             } else {
-                validationResult.textContent = "無効なチケットです";
-                validationResult.className = "invalid"; // 無効なメッセージにクラスを追加
+                document.getElementById("validation-result").textContent = "無効なチケットです";
+                document.getElementById("validation-result").className = "invalid"; // 無効なチケットのスタイル
             }
         });
     </script>
