@@ -1,3 +1,48 @@
+//===============================================================
+// サムネイルスライドショー
+//===============================================================
+$(document).ready(function() {
+    // 各 .img-parts を個別に処理
+    $('.img-parts').each(function() {
+        var $imgParts = $(this);
+        var $divs = $imgParts.children('div');
+        var divCount = $divs.length;
+
+        // 各 div の幅を計算
+        var divWidth = 100 / (divCount * 2);
+
+        // サムネイルの枚数に応じてアニメーション時間と幅を計算
+        var animationTime = (divCount / 4) * 6 + 's';
+        var slideWidth = (divCount / 6) * 200 + '%';
+
+        // 各 div に幅を設定
+        $divs.css({
+            'flex': '0 0 ' + divWidth + '%',
+            'width': divWidth + '%'
+        });
+
+        // .img-parts に animation と width を設定
+        $imgParts.css({
+            'animation-duration': animationTime,
+            'width': slideWidth
+        });
+
+        // 初期ロード時に子要素を複製して追加
+        $divs.clone().appendTo($imgParts);
+
+        // サムネイルにマウスが乗った時にアニメーションを一時停止
+        $imgParts.on('mouseenter', function() {
+            $(this).css('animation-play-state', 'paused');
+        });
+
+        // サムネイルからマウスが離れた時にアニメーションを再開
+        $imgParts.on('mouseleave', function() {
+            $(this).css('animation-play-state', 'running');
+        });
+    });
+});
+
+
 
 //===============================================================
 // debounce関数
@@ -62,7 +107,7 @@ $(function() {
 
     // ドロップダウンの親liタグ（空のリンクを持つaタグのデフォルト動作を防止）
 	$menubar.find('a[href=""]').click(function() {
-		return false;
+		return False;
 	});
 
 	// ドロップダウンメニューの処理
@@ -107,6 +152,8 @@ $('.ddmenu').on('touchstart', function(e) {
     $('.ddmenu_parent ul a').click(function() {
         $('.ddmenu_parent > ul').hide();
     });
+
+    
 
 });
 
