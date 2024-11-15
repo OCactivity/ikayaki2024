@@ -13,7 +13,7 @@ $(document).ready(function() {
 
         // サムネイルの枚数に応じてアニメーション時間と幅を計算
         var animationTime = (divCount / 4) * 6 + 's';
-        var slideWidth = (divCount / 6) * 200 + '%';
+        var slideWidth = (divCount / 4) * 200 + '%';
 
         // 各 div に幅を設定
         $divs.css({
