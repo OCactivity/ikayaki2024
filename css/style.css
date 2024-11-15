@@ -897,4 +897,46 @@ dl.text-menu dd {
 	.sh {display: none;}
 	.pc {display: block;}
 
-	}/*追加指定ここまで*/
+	}
+
+/* スライドショー全体を囲むブロック */
+.slide-thumbnail1-parts {
+    overflow-x: hidden;
+    margin-bottom: 2rem;
+}
+
+/* 画像たちを囲むブロック */
+.slide-thumbnail1-parts .img-parts {
+    display: flex;
+    overflow: hidden;
+}
+
+/* 画像 */
+.slide-thumbnail1-parts .img-parts img {
+    padding: 0 1rem; /* 上下、左右への画像の余白 */
+}
+
+/* 右から左へ、左から右へ、のアニメーション */
+.slide-thumbnail1-parts .rtl-parts,
+.slide-thumbnail1-parts .ltr-parts {
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    animation-duration: 10s; /* スクロール速度の調整 */
+}
+
+.slide-thumbnail1-parts .rtl-parts {
+    animation-name: slide-rtl-parts;
+}
+.slide-thumbnail1-parts .ltr-parts {
+    animation-name: slide-ltr-parts;
+}
+
+@keyframes slide-rtl-parts {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+}
+
+@keyframes slide-ltr-parts {
+    0% { transform: translateX(-50%); }
+    100% { transform: translateX(0); }
+}
